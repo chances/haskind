@@ -2,15 +2,10 @@ import should from 'should';
 import * as L from '../src/List';
 import { fibs } from './helpers';
 import { id } from '../src/util';
-import { Ordering } from '../src/Ord';
+import { compare } from '../src/Ord';
 
 const isEven = x => x % 2 === 0;
 const eq = (x,y) => x === y;
-const compare = (x,y) => x === y
-  ? Ordering.EQ
-  : x < y
-  ? Ordering.LT
-  : Ordering.GT;
 
 describe('List', () => {
   describe('Basic Functions', () => {
@@ -511,9 +506,14 @@ describe('List', () => {
           L.take(-1, [1,2,3,4]).should.be.eql([]);
         });
       });
-      xdescribe('(5, fibs())', () => {
+      describe('(5, fibs())', () => {
         it('== [1,1,2,3,5]', () => {
-          L.take(1, fibs()).should.be.eql([1,1,2,3,5]);
+          L.take(5, fibs()).should.be.eql([1,1,2,3,5]);
+        });
+      });
+      describe('(3, "123456")', function () {
+        describe('== "123"', function () {
+          L.take(3, '123456').should.be.eql('123');
         });
       });
     });
@@ -543,8 +543,64 @@ describe('List', () => {
           L.drop(-1, [1,2,3,4]).should.be.eql([1,2,3,4]);
         });
       });
+      describe('(-3, "123456")', function () {
+        it('== "123456"', function () {
+          L.drop(-3, '123456').should.be.eql('123456');
+        });
+      });
+      describe('(0, "123456")', function () {
+        it('== "123456"', function () {
+          L.drop(0, '123456').should.be.eql('123456');
+        });
+      });
+      describe('(3, "123456")', function () {
+        it('== "456"', function () {
+          L.drop(3, '123456').should.be.eql('456');
+        });
+      });
+      describe('(4, "123456")', function () {
+        it('== "56"', function () {
+          L.drop(4, '123456').should.be.eql('56');
+        });
+      });
+      describe('(-1, fibs()).value', function () {
+        it('== 1', function () {
+          L.drop(-1, fibs()).next().value.should.be.eql(1);
+        });
+      });
+      describe('(0, fibs()).value', function () {
+        it('== 1', function () {
+          L.drop(0, fibs()).next().value.should.be.eql(1);
+        });
+      });
+      describe('(1, fibs()).value', function () {
+        it('== 1', function () {
+          L.drop(1, fibs()).next().value.should.be.eql(1);
+        });
+      });
+      describe('(2, fibs()).value', function () {
+        it('== 2', function () {
+          L.drop(2, fibs()).next().value.should.be.eql(2);
+        });
+      });
+      describe('(3, fibs()).value', function () {
+        it('== 3', function () {
+          L.drop(3, fibs()).next().value.should.be.eql(3);
+        });
+      });
+      describe('(4, fibs()).value', function () {
+        it('== 5', function () {
+          L.drop(4, fibs()).next().value.should.be.eql(5);
+        });
+      });
+      describe('(5, fibs()).value', function () {
+        it('== 8', function () {
+          L.drop(5, fibs()).next().value.should.be.eql(8);
+        });
+      });
     });
     describe('splitAt', () => {
+
 
     });
     describe('takeWhile', () => {

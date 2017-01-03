@@ -16,7 +16,7 @@ export const _lazy: Function =
 
 export const _notUndefined =
   (x: ?any, fn: Function): any =>
-    type(x) === 'undefined' ? fn() : x;
+    type(x) === 'Undefined' ? fn() : x;
 
 export const _curry: Function =
   (fn: Function): Function =>
@@ -54,9 +54,15 @@ export const propExists = (prop, obj) => typeof(obj[prop]) !== 'undefined';
 
 export function type (x) {
   switch (typeof x) {
-  case 'object':
+  case 'undefined' : return 'Undefined';
+  case 'string'    : return 'String';
+  case 'boolean'   : return 'Boolean';
+  case 'number'    : return 'Number';
+  case 'function'  : return 'Function';
+  case 'object'    :
     switch (true) {
     case x === null : return 'Null';
+    case typeof x.next === 'function': return 'Generator';
     case x instanceof Map : return 'Map';
     case x instanceof Set : return 'Set';
     case Array.isArray(x) : return 'Array';
@@ -66,9 +72,6 @@ export function type (x) {
     case propExists('nothing', x): return 'Maybe';
     default : return 'Object';
     }
-  case 'string': return 'String';
-  case 'boolean': return 'Boolean';
-  case 'number': return 'Number';
-  default : return typeof x;
+  default : return 'Unknown';
   }
 }

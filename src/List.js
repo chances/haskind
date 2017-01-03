@@ -137,19 +137,40 @@ export const minimum: Function =
 // Extracting sublists
 
 // take :: Int -> [a] -> [a]
-export const take = _curry((n: number, xs: any[]): any[] =>
-  n < 0 ? [] : xs.slice(0, n)
-);
+export const take = _curry((n: number, xs: Iterable): Iterable => {
+  const list = [];
+  if (n < 0) return list;
+  switch(type(xs)) {
+  case 'String':
+  case 'Array':
+    return xs.slice(0,n);
+  default: {
+    let index = 0;
+    for (let x of xs) {
+      if (index < n) list.push(x);
+      else break;
+      index +=1;
+    }
+    return list;
+  }}
+});
 
 // drop :: Int -> [a] -> [a]
-export const drop = _curry((n: number, xs: any[]): any[] =>
-  n < 0 ? xs : xs.filter((x, i) => i >= n)
-);
+export const drop = _curry((n: number, xs: Iterable): Iterable => {
+  if (n <=  0) return xs;
+  switch (type(xs)) {
+  case 'Array' : return xs.filter((x, i) => i >= n);
+  case 'String': return xs.split('').filter((x, i) => i >= n).join('');
+  case 'Generator': {
+    for (let i = 0; i < n; i+=1) xs.next();
+    return xs;
+  }
+  default: return [];
+  }
+});
 
 // splitAt :: Int -> [a] -> ([a], [a])
-export const splitAt = _curry((n, xs) =>
-  xs.filter((x, i) => i !== n)
-);
+export const splitAt = undefined;
 
 // takeWhile :: (a -> Bool) -> [a] -> [a]
 export const takeWhile = undefined;

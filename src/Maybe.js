@@ -16,11 +16,11 @@ export const maybe = _curry((def: any, fn: Function, m: Maybe) => {
 
 // isJust :: Maybe a -> Bool
 export const isJust: Function = (m: Maybe): boolean =>
-  type(m) === 'Maybe' && type(m.just) !== 'undefined';
+  type(m) === 'Maybe' && type(m.just) !== 'Undefined';
 
 // isNothing :: Maybe a -> Bool
 export const isNothing: Function = (m: Maybe): boolean =>
-  type(m) === 'Maybe' && type(m.nothing) !== 'undefined';
+  type(m) === 'Maybe' && type(m.nothing) !== 'Undefined';
 
 // fromJust :: Maybe a -> a
 export const fromJust = (m: Maybe): any =>

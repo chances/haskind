@@ -1,5 +1,6 @@
 import should from 'should';
 import * as U from '../src/util';
+import { fibs } from './helpers';
 
 describe('util', () => {
   describe('id', () => {
@@ -278,6 +279,16 @@ describe('util', () => {
     describe('(Right(2))', () => {
       it('== "Either"', () => {
         U.type({ right: 2 }).should.be.eql('Either');
+      });
+    });
+    describe('(fibs)', function () {
+      it('== "Function"', function () {
+        U.type(fibs).should.be.eql('Function');
+      });
+    });
+    describe('(fibs())', function () {
+      it('== "Generator"', function () {
+        U.type(fibs()).should.be.eql('Generator');
       });
     });
   });
